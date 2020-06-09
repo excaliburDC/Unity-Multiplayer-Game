@@ -9,19 +9,25 @@ using System;
 public class PlayerRegister : MonoBehaviour
 {
     public Button joinButton;
-    public CanvasGroup _cGroup;
+    public GameObject registerCanvas;
+    public GameObject mainMenu;
 
-    [SerializeField] private TMP_InputField usernameInput=null;
+    [SerializeField] private TMP_InputField usernameInput;
     [SerializeField] private GameObject welcomeScreen;
-    [SerializeField] private Image welcomeImage;
+    [SerializeField] private TMP_Text welcomeText;
 
-    private const string playerNamePref = "PlayerName";
-    
+
+    private readonly string playerNamePref = "PlayerName";
+
+    private Animator welcomeAnim;
 
     // Start is called before the first frame update
     void Awake()
     {
+        welcomeAnim = welcomeScreen.GetComponent<Animator>();
+        welcomeText = welcomeScreen.GetComponentInChildren<TMP_Text>();
         SetupLoginScreen();
+        registerCanvas.SetActive(true);
     }
 
     private void SetupLoginScreen()
@@ -66,12 +72,35 @@ public class PlayerRegister : MonoBehaviour
 
         Debug.Log("Player Name " + _playerName + " saved successfully");
 
+        StartCoroutine(StartFadeAnim(_playerName));
+
         
     }
 
-    // Update is called once per frame
-    void Update()
+    IEnumerator StartFadeAnim(string name)
     {
         
+
+        welcomeAnim.SetTrigger("FadeOut");
+
+        welcomeText.text = "Welcome " + name+" !";
+
+        
+
+        yield return new WaitForSeconds(2f);
+
+        welcomeAnim.SetTrigger("FadeIn");
+
+        yield return new WaitForSeconds(0.2f);
+
+        mainMenu.SetActive(true);
+
+        registerCanvas.SetActive(false);
+
+        
+
+
     }
+
+    
 }
