@@ -14,7 +14,7 @@ public class PlayerRegister : MonoBehaviour
 
     [SerializeField] private TMP_InputField usernameInput;
     [SerializeField] private GameObject welcomeScreen;
-    [SerializeField] private TMP_Text welcomeText;
+    [SerializeField] private TextMeshProUGUI welcomeText;
 
 
     private readonly string playerNamePref = "PlayerName";
@@ -25,8 +25,9 @@ public class PlayerRegister : MonoBehaviour
     void Awake()
     {
         welcomeAnim = welcomeScreen.GetComponent<Animator>();
-        welcomeText = welcomeScreen.GetComponentInChildren<TMP_Text>();
+        welcomeText = welcomeScreen.GetComponentInChildren<TextMeshProUGUI>();
         SetupLoginScreen();
+        welcomeScreen.SetActive(false);
         registerCanvas.SetActive(true);
     }
 
@@ -71,6 +72,8 @@ public class PlayerRegister : MonoBehaviour
         PlayerPrefs.SetString(playerNamePref, _playerName);
 
         Debug.Log("Player Name " + _playerName + " saved successfully");
+
+        welcomeScreen.SetActive(true);
 
         StartCoroutine(StartFadeAnim(_playerName));
 
