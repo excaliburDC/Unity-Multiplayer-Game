@@ -130,7 +130,7 @@ public class Matchmake : MonoBehaviourPunCallbacks
         while(curCount>0f)
         {
             Debug.Log("Match about to begin in:" + curCount);
-            waitingStatusText.text = "Match about to begin in\n" + curCount;
+            waitingStatusText.text = "Match about to begin in\n\n" + curCount;
             yield return new WaitForSeconds(1f);
             curCount--;
         }
