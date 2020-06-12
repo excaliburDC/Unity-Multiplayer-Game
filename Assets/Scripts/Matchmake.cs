@@ -62,13 +62,10 @@ public class Matchmake : MonoBehaviourPunCallbacks
     public override void OnDisconnected(DisconnectCause cause)
     {
 
-        //StartCoroutine(DisconnectFailure());
+        StartCoroutine(DisconnectFailure());
 
         Debug.LogError($"Disconnected due to : {cause}");
 
-        findOpponentpanel.SetActive(false);
-
-        mainMenuPanel.SetActive(true);
 
 
     }
@@ -116,9 +113,13 @@ public class Matchmake : MonoBehaviourPunCallbacks
 
     private IEnumerator DisconnectFailure()
     {
-        waitingStatusText.text = "Failed to Find an opponent\n Going back to Main Menu";
+        waitingStatusText.text = "Failed to Find an opponent\n\n  Going back to Main Menu";
 
         yield return new WaitForSeconds(2f);
+
+        findOpponentpanel.SetActive(false);
+
+        mainMenuPanel.SetActive(true);
     }
 
     private IEnumerator LoadGame()
