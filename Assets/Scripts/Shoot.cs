@@ -6,34 +6,56 @@ using Photon.Realtime;
 
 public class Shoot : MonoBehaviourPun
 {
-    public float laserForce = 5f;
-
+    [SerializeField] private float laserForce = 5f;
     [SerializeField] private Transform spawnPoint;
 
     private Rigidbody2D rb2d;
 
+
+
     private void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
+
     }
 
     void Update()
     {
-        if (!Input.GetMouseButtonDown(0))
-            return;
-
-        SpawnLasers();
+        if(photonView.IsMine)
+        {
+            FireInput();
+        }
+          
     }
 
-    //[PunRPC]
-    void SpawnLasers()
+    void FireInput()
     {
-       GameObject player1Laser = PoolManager.Instance.SpawnInWorld("laser1", spawnPoint.position, spawnPoint.rotation);
-        // PoolManager.Instance.SpawnInWorld("laser2", spawnPoint.position, spawnPoint.rotation);
-
-        
+        if (Input.GetButtonDown("Fire1"))
+        {
+            photonView.RPC("ShootLasers", RpcTarget.All);
+        }
     }
 
+    [PunRPC]
+    void ShootLasers()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            GameObject player1Laser = PoolManager.Instance.SpawnInWorld("laser1", spawnPoint.position, spawnPoint.rotation);
+            Rigidbody2D laser1Rb = player1Laser.GetComponent<Rigidbody2D>();
+            laser1Rb.velocity = spawnPoint.up * laserForce;
+        }
+
+        else
+        {
+            GameObject player2Laser = PoolManager.Instance.SpawnInWorld("laser2", spawnPoint.position, spawnPoint.rotation);
+            Rigidbody2D laser2Rb = player2Laser.GetComponent<Rigidbody2D>();
+            laser2Rb.velocity = spawnPoint.up * laserForce;
+        }
+
+
+
+    }
 
 
     

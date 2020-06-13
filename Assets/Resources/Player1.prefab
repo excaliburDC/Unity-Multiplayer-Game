@@ -278,6 +278,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96907df99da45bb4596b2187acb1f130, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  laserForce: 6
   spawnPoint: {fileID: 4607095602573098171}
 --- !u!1 &6565391033350225364
 GameObject:

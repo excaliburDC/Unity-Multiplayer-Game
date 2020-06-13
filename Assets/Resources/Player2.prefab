@@ -178,7 +178,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveDir: 0
-  moveSpeed: 4
+  moveSpeed: 5
 --- !u!114 &8332555567586101059
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -228,6 +228,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96907df99da45bb4596b2187acb1f130, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  laserForce: 6
   spawnPoint: {fileID: 2132457504484708788}
 --- !u!1 &4021598335578190236
 GameObject:
