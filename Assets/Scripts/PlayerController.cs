@@ -5,6 +5,7 @@ using Photon.Pun;
 
 
 [RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(ShipWrapppingEffect))]
 public class PlayerController : MonoBehaviourPun
 {
 
