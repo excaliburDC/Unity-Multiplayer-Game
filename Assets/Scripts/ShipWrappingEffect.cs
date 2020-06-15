@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShipWrapppingEffect : MonoBehaviour
+public class ShipWrappingEffect : MonoBehaviour
 {
 	[SerializeField]
 	private float padding = 0.1f;

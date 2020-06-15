@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4277981782006621380}
   - component: {fileID: 2441008566506441766}
+  - component: {fileID: 6566653530340620376}
   m_Layer: 0
   m_Name: AsterSmall1
   m_TagString: Untagged
@@ -80,6 +81,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!58 &6566653530340620376
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 421170513453419696}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.2
 --- !u!1 &1383256528792922403
 GameObject:
   m_ObjectHideFlags: 0
@@ -90,6 +107,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6085351961623928582}
   - component: {fileID: 1756180368557602566}
+  - component: {fileID: 2430728410888761186}
   m_Layer: 0
   m_Name: AsterSmall5
   m_TagString: Untagged
@@ -160,6 +178,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!58 &2430728410888761186
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1383256528792922403}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.28
 --- !u!1 &2091095441727313649
 GameObject:
   m_ObjectHideFlags: 0
@@ -169,9 +203,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7776573116706039516}
+  - component: {fileID: -17091843045697864}
+  - component: {fileID: -1341885064915411719}
+  - component: {fileID: -900101770901791777}
   m_Layer: 0
   m_Name: AsteroidSmall
-  m_TagString: Untagged
+  m_TagString: AsteroidSmall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -196,6 +233,61 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!50 &-17091843045697864
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2091095441727313649}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!114 &-1341885064915411719
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2091095441727313649}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92f796fcba6f00a4cb846e29681991e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  padding: 0.1
+--- !u!114 &-900101770901791777
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2091095441727313649}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7aad2819fa45f194db190cb8e3ba8ad3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  points: 0
+  childAsteroid: {fileID: 0}
+  asteroids:
+  - {fileID: 421170513453419696}
+  - {fileID: 5592775780709686352}
+  - {fileID: 8586882886401939552}
+  - {fileID: 4787932135759668592}
+  - {fileID: 1383256528792922403}
+  - {fileID: 7226855365536900294}
 --- !u!1 &4787932135759668592
 GameObject:
   m_ObjectHideFlags: 0
@@ -206,6 +298,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5742995953385802523}
   - component: {fileID: 3818567606076844863}
+  - component: {fileID: 6429529271218096167}
   m_Layer: 0
   m_Name: AsterSmall4
   m_TagString: Untagged
@@ -276,6 +369,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!58 &6429529271218096167
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4787932135759668592}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.22
 --- !u!1 &5592775780709686352
 GameObject:
   m_ObjectHideFlags: 0
@@ -286,6 +395,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6618439793628639195}
   - component: {fileID: 2143529717939696602}
+  - component: {fileID: 7876695422764116813}
   m_Layer: 0
   m_Name: AsterSmall2
   m_TagString: Untagged
@@ -356,6 +466,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!58 &7876695422764116813
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5592775780709686352}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.27
 --- !u!1 &7226855365536900294
 GameObject:
   m_ObjectHideFlags: 0
@@ -366,6 +492,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3266019779080521616}
   - component: {fileID: 842533006176652035}
+  - component: {fileID: 9186880438155119533}
   m_Layer: 0
   m_Name: AsterSmall6
   m_TagString: Untagged
@@ -436,6 +563,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!58 &9186880438155119533
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7226855365536900294}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.25
 --- !u!1 &8586882886401939552
 GameObject:
   m_ObjectHideFlags: 0
@@ -446,6 +589,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2052473308434601265}
   - component: {fileID: 7452859261877471323}
+  - component: {fileID: 8447058400147376795}
   m_Layer: 0
   m_Name: AsterSmall3
   m_TagString: Untagged
@@ -516,3 +660,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!58 &8447058400147376795
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8586882886401939552}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.26
