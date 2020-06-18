@@ -1,31 +1,35 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
 using Photon.Pun;
-using Photon.Realtime;
+
 
 public class Shoot : MonoBehaviourPun
 {
-    [SerializeField] private float laserForce = 5f;
+
+    [SerializeField] private float laserForce = 6f;
     [SerializeField] private Transform spawnPoint;
 
     private Rigidbody2D rb2d;
 
 
 
+
     private void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
-
     }
 
     void Update()
     {
-        if(photonView.IsMine)
+        if (photonView.IsMine)
         {
             FireInput();
         }
-          
+
+        //TestFire();
+
+        
+
     }
 
     void FireInput()
@@ -36,6 +40,15 @@ public class Shoot : MonoBehaviourPun
         }
     }
 
+    //for testing only
+    //void TestFire()
+    //{
+    //    if(Input.GetButtonDown("Fire1"))
+    //    {
+    //        ShootLasers();
+    //    }
+    //}
+
     [PunRPC]
     void ShootLasers()
     {
@@ -44,6 +57,7 @@ public class Shoot : MonoBehaviourPun
             GameObject player1Laser = PoolManager.Instance.SpawnInWorld("laser1", spawnPoint.position, spawnPoint.rotation);
             Rigidbody2D laser1Rb = player1Laser.GetComponent<Rigidbody2D>();
             laser1Rb.velocity = spawnPoint.up * laserForce;
+        
         }
 
         else
@@ -51,8 +65,13 @@ public class Shoot : MonoBehaviourPun
             GameObject player2Laser = PoolManager.Instance.SpawnInWorld("laser2", spawnPoint.position, spawnPoint.rotation);
             Rigidbody2D laser2Rb = player2Laser.GetComponent<Rigidbody2D>();
             laser2Rb.velocity = spawnPoint.up * laserForce;
+     
         }
 
+        ////for testing
+        //GameObject player1Laser = PoolManager.Instance.SpawnInWorld("laser1", spawnPoint.position, spawnPoint.rotation);
+        //Rigidbody2D laser1Rb = player1Laser.GetComponent<Rigidbody2D>();
+        //laser1Rb.velocity = spawnPoint.up * laserForce;
 
 
     }

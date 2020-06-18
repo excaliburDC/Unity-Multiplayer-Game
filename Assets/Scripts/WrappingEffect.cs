@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShipWrappingEffect : MonoBehaviour
+public class WrappingEffect : MonoBehaviour
 {
+
+
 	[SerializeField]
 	private float padding = 0.1f;
 
@@ -29,13 +31,10 @@ public class ShipWrappingEffect : MonoBehaviour
 		right = 1.0f + padding;
 	}
 
-	private void Update()
+	public virtual void Update()
 	{
 		WrapScreen();
 		
-		
-
-
 	}
 
 	private void WrapScreen()

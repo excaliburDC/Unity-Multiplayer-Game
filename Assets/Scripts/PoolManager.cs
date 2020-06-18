@@ -30,14 +30,6 @@ public class PoolManager : MonoBehaviour
 
         // DontDestroyOnLoad(this.gameObject);
 
-    }
-
-    #endregion
-
-  
-    private void Start()
-    {
-
         poolDictionary = new Dictionary<string, Queue<GameObject>>();
 
         foreach (PoolObj pool in pools)
@@ -55,6 +47,16 @@ public class PoolManager : MonoBehaviour
 
             poolDictionary.Add(pool.poolName, objectToPool);
         }
+
+    }
+
+    #endregion
+
+  
+    private void Start()
+    {
+
+       
 
     }
 

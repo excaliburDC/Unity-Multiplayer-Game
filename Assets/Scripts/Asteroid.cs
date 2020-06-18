@@ -2,17 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 using CustomRandomGenExtension;
+using Photon.Pun;
 
-[RequireComponent(typeof(ShipWrappingEffect))]
-public class Asteroid : MonoBehaviour
+[RequireComponent(typeof(WrappingEffect))]
+public class Asteroid : MonoBehaviourPun
 {
-	public event System.Action<Asteroid,Vector3, GameObject> eventDestroyed;
+	public event System.Action<Asteroid,Vector3, List<GameObject>> EventDestroyed;
 
 	public int points;
 
-	public GameObject childAsteroid;
+	public  List<GameObject> childAsteroid;
 
 	public List<GameObject> asteroids;
+
+	public float asteroidMoveSpeed = 1f;
+
+
 
 
 	private void Start()
@@ -20,21 +25,11 @@ public class Asteroid : MonoBehaviour
 		SelectActiveAsteroid();
 	}
 
-
 	private void Update()
 	{
-		if (Input.GetKeyDown(KeyCode.LeftControl))
+		if(photonView.IsMine)
 		{
-			if (eventDestroyed != null)
-			{
-				if (childAsteroid == null)
-				{
-					Debug.Log("The asteroid can't be broken any further");
-					return;
-				}
-				eventDestroyed(this,transform.position, childAsteroid);
-				Debug.Log("Asteroid {0} destroyed" + this.gameObject.name);
-			}
+			photonView.RPC("AsteroidMovement", RpcTarget.All);
 		}
 	}
 
@@ -50,6 +45,27 @@ public class Asteroid : MonoBehaviour
 		GameObject selectedAsteroid = asteroids[RandomIndexGenerator.GetRandomIndex(asteroids)];
 		Debug.Log(selectedAsteroid.name);
 		selectedAsteroid.SetActive(true);
+
+	}
+
+	public void AsteroidMovement()
+	{
+		transform.Translate(transform.up * asteroidMoveSpeed * Time.deltaTime, Space.World);
+	}
+
+	public void TakeDamage()
+	{
+		if (EventDestroyed != null)
+		{
+			if (childAsteroid == null)
+			{
+				Debug.Log("The asteroid can't be broken any further");
+				return;
+			}
+			EventDestroyed(this, transform.position, childAsteroid);
+			Debug.Log("Asteroid"+this.gameObject.name+ " destroyed");
+			gameObject.SetActive(false);
+		}
 
 	}
 

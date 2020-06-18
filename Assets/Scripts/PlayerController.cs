@@ -5,7 +5,7 @@ using Photon.Pun;
 
 
 [RequireComponent(typeof(Rigidbody2D))]
-[RequireComponent(typeof(ShipWrappingEffect))]
+[RequireComponent(typeof(WrappingEffect))]
 public class PlayerController : MonoBehaviourPun
 {
 
@@ -31,11 +31,11 @@ public class PlayerController : MonoBehaviourPun
 
     private void Update()
     {
-        //if (photonView.IsMine)
-        //{
+        if (photonView.IsMine)
+        {
             InputButtons();
             MovePlayer();
-       // }
+        }
     }
 
 

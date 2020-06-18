@@ -1,36 +1,61 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class AsteroidSpawner : MonoBehaviour
 {
-	//[SerializeField] private GameObject asteroidPrefab;
-    [SerializeField] private float offscreenOffset;
+	
+	[SerializeField] private GameObject asteroidPrefab;
+	[SerializeField] private float offscreenOffset;
+	[SerializeField] private int startAsteroidCount = 2;
+
 
 	private Camera cam;
 	public List<Asteroid> asteroidsList; //keeps track of no of asteroid in the game
 
+	public int AsteroidsRemaining
+	{
+		get { return asteroidsList.Count; }
+	}
+
 	private void Awake()
 	{
 		cam = Camera.main;
+		
 	}
 
 	// Start is called before the first frame update
 	void Start()
     {
-        
-    }
+		SpawnAsteroids();
+		
+	}
 
-    // Update is called once per frame
-    void Update()
-    {
-        if(Input.GetButtonDown("Jump"))
+
+	[PunRPC]
+	public void SpawnAsteroids()
+	{
+		int numAsteroids = startAsteroidCount;
+
+		for (int i = 0; i < numAsteroids; i++)
 		{
-			SpawnAsteroids("AsteroidBig",GetOffScreenPosition(),GetOffScreenRotation());
+			InitAsteroids(asteroidPrefab, GetOffScreenPosition(), GetOffScreenRotation());
 		}
 
-	
-    }
+	}
+
+	public void ResetAsteroid()
+	{
+		if (asteroidsList != null)
+		{
+			foreach (Asteroid ast in asteroidsList)
+			{
+				ast.gameObject.SetActive(false);
+			}
+		}
+		asteroidsList = new List<Asteroid>();
+	}
 
 
 	private Vector3 GetOffScreenPosition()
@@ -90,29 +115,35 @@ public class AsteroidSpawner : MonoBehaviour
 		return Quaternion.Euler(new Vector3(0.0f, 0.0f, angle));
 	}
 
-	private void SpawnAsteroids(string prefabName,Vector3 position,Quaternion rotation)
+	private void InitAsteroids(GameObject prefab,Vector3 position,Quaternion rotation)
 	{
-		GameObject asteroid = PoolManager.Instance.SpawnInWorld(prefabName, position, rotation);
+		GameObject asteroidObj = PhotonNetwork.Instantiate(prefab.name, position, rotation);
 
-		Asteroid astObj = asteroid.GetComponent<Asteroid>();
+		asteroidObj.transform.SetParent(gameObject.transform);
+
+		Asteroid astObj = asteroidObj.GetComponent<Asteroid>();
 
 
 		//astObj.SelectActiveAsteroid();
 
-		astObj.eventDestroyed += OnAsteroidDie;
+		astObj.EventDestroyed += OnAsteroidDie;
 
 		asteroidsList.Add(astObj);
 
 		
 	}
 
-	private void OnAsteroidDie(Asteroid asteroid,Vector3 position, GameObject childAsteroids)
+	private void OnAsteroidDie(Asteroid asteroid,Vector3 position, List<GameObject> childAsteroids)
 	{
 		asteroidsList.Remove(asteroid);
 
-		// create children asteroids
-		Quaternion rotation = Quaternion.Euler(new Vector3(0.0f, 0.0f, Mathf.Floor(Random.Range(0.0f, 360.0f))));
-		SpawnAsteroids(childAsteroids.name, position, rotation);
+		for (int i = 0; i < childAsteroids.Count; i++)
+		{
+			// create children asteroids
+			Quaternion rotation = Quaternion.Euler(new Vector3(0.0f, 0.0f, Mathf.Floor(Random.Range(0.0f, 360.0f))));
+			InitAsteroids(childAsteroids[i], position, rotation);
+		}
+		
 		
 
 		//// dispatch event

@@ -8,6 +8,7 @@ TagManager:
   - AsteroidBig
   - AsteroidMed
   - AsteroidSmall
+  - Asteroid
   layers:
   - Default
   - TransparentFX
