@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
-public class AsteroidSpawner : MonoBehaviour
+
+public class AsteroidSpawner : MonoBehaviourPun
 {
 	
 	[SerializeField] private GameObject asteroidPrefab;
@@ -11,6 +12,7 @@ public class AsteroidSpawner : MonoBehaviour
 	[SerializeField] private int startAsteroidCount = 2;
 
 
+	
 	private Camera cam;
 	public List<Asteroid> asteroidsList; //keeps track of no of asteroid in the game
 
@@ -22,16 +24,20 @@ public class AsteroidSpawner : MonoBehaviour
 	private void Awake()
 	{
 		cam = Camera.main;
-		
+	
 	}
 
 	// Start is called before the first frame update
 	void Start()
     {
-		SpawnAsteroids();
+		if(photonView.IsMine)
+		{
+			photonView.RPC("SpawnAsteroids", RpcTarget.All);
+		}
 		
+		//SpawnAsteroids();
+			//photonView.RPC("SpawnAsteroids", RpcTarget.All);
 	}
-
 
 	[PunRPC]
 	public void SpawnAsteroids()
@@ -40,7 +46,8 @@ public class AsteroidSpawner : MonoBehaviour
 
 		for (int i = 0; i < numAsteroids; i++)
 		{
-			InitAsteroids(asteroidPrefab, GetOffScreenPosition(), GetOffScreenRotation());
+			//InitAsteroids(asteroidPrefab, GetOffScreenPosition(), GetOffScreenRotation());
+			photonView.RPC("InitAsteroids", RpcTarget.All,asteroidPrefab,GetOffScreenPosition(),GetOffScreenRotation());
 		}
 
 	}
@@ -115,9 +122,11 @@ public class AsteroidSpawner : MonoBehaviour
 		return Quaternion.Euler(new Vector3(0.0f, 0.0f, angle));
 	}
 
+
+	[PunRPC]
 	private void InitAsteroids(GameObject prefab,Vector3 position,Quaternion rotation)
 	{
-		GameObject asteroidObj = PhotonNetwork.Instantiate(prefab.name, position, rotation);
+		GameObject asteroidObj = PhotonNetwork.InstantiateSceneObject(prefab.name, position, rotation);
 
 		asteroidObj.transform.SetParent(gameObject.transform);
 
@@ -141,7 +150,10 @@ public class AsteroidSpawner : MonoBehaviour
 		{
 			// create children asteroids
 			Quaternion rotation = Quaternion.Euler(new Vector3(0.0f, 0.0f, Mathf.Floor(Random.Range(0.0f, 360.0f))));
-			InitAsteroids(childAsteroids[i], position, rotation);
+			//InitAsteroids(childAsteroids[i], position, rotation);
+			photonView.RPC("InitAsteroids", RpcTarget.All, childAsteroids[i],position,rotation);
+		
+			
 		}
 		
 		
