@@ -30,24 +30,23 @@ public class AsteroidSpawner : MonoBehaviourPun
 	// Start is called before the first frame update
 	void Start()
     {
-		if(photonView.IsMine)
-		{
-			photonView.RPC("SpawnAsteroids", RpcTarget.All);
-		}
-		
-		//SpawnAsteroids();
-			//photonView.RPC("SpawnAsteroids", RpcTarget.All);
+	
+		SpawnAsteroids();
+		//photonView.RPC("SpawnAsteroids", RpcTarget.All);
 	}
 
-	[PunRPC]
 	public void SpawnAsteroids()
 	{
 		int numAsteroids = startAsteroidCount;
 
 		for (int i = 0; i < numAsteroids; i++)
 		{
-			//InitAsteroids(asteroidPrefab, GetOffScreenPosition(), GetOffScreenRotation());
-			photonView.RPC("InitAsteroids", RpcTarget.All,asteroidPrefab,GetOffScreenPosition(),GetOffScreenRotation());
+			Vector3 offScreenPos = GetOffScreenPosition();
+			Quaternion offScreenRot = GetOffScreenRotation();
+
+			InitAsteroids(asteroidPrefab, offScreenPos, offScreenRot);
+
+			//photonView.RPC("InitAsteroids", RpcTarget.All,asteroidPrefab,offScreenPos,offScreenRot);
 		}
 
 	}
@@ -123,10 +122,12 @@ public class AsteroidSpawner : MonoBehaviourPun
 	}
 
 
-	[PunRPC]
 	private void InitAsteroids(GameObject prefab,Vector3 position,Quaternion rotation)
 	{
+
 		GameObject asteroidObj = PhotonNetwork.InstantiateSceneObject(prefab.name, position, rotation);
+
+		Debug.Log(asteroidObj);
 
 		asteroidObj.transform.SetParent(gameObject.transform);
 
@@ -150,8 +151,8 @@ public class AsteroidSpawner : MonoBehaviourPun
 		{
 			// create children asteroids
 			Quaternion rotation = Quaternion.Euler(new Vector3(0.0f, 0.0f, Mathf.Floor(Random.Range(0.0f, 360.0f))));
-			//InitAsteroids(childAsteroids[i], position, rotation);
-			photonView.RPC("InitAsteroids", RpcTarget.All, childAsteroids[i],position,rotation);
+			InitAsteroids(childAsteroids[i], position, rotation);
+			//photonView.RPC("InitAsteroids", RpcTarget.All, childAsteroids[i],position,rotation);
 		
 			
 		}
@@ -165,7 +166,17 @@ public class AsteroidSpawner : MonoBehaviourPun
 		//}
 	}
 
+	//public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+	//{
+	//	if (stream.IsWriting)
+	//	{
+	//		stream.SendNext(asteroidPrefab);
 
+	//	}
 
-
+	//	else
+	//	{
+	//		asteroidPrefab = (GameObject)stream.ReceiveNext();
+	//	}
+	//}
 }

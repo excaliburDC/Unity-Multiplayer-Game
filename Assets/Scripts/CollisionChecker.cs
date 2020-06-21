@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class CollisionChecker : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class CollisionChecker : MonoBehaviour
             Asteroid asteroid = col.gameObject.GetComponentInParent<Asteroid>();
             asteroid.TakeDamage();
             gameObject.SetActive(false);
+            
         }
     }
 }

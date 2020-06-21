@@ -24,7 +24,8 @@ public class Asteroid : MonoBehaviourPun
 	{
 		if (photonView.IsMine)
 		{
-			photonView.RPC("SelectActiveAsteroid", RpcTarget.All);
+			//photonView.RPC("SelectActiveAsteroid", RpcTarget.All);
+			SelectActiveAsteroid();
 		}
 		//SelectActiveAsteroid();
 	}
@@ -32,9 +33,13 @@ public class Asteroid : MonoBehaviourPun
 	private void Update()
 	{
 		if (photonView.IsMine)
-			photonView.RPC("AsteroidMovement", RpcTarget.All);
+		{
+			//photonView.RPC("AsteroidMovement", RpcTarget.All);
+			AsteroidMovement();
+		}
+			
 
-		//AsteroidMovement();
+		
 
 		//if(PhotonNetwork.IsMasterClient)
 		//{
@@ -43,6 +48,7 @@ public class Asteroid : MonoBehaviourPun
 
 	}
 
+	//[PunRPC]
 	public void SelectActiveAsteroid()
 	{
 		foreach (GameObject asteroidObj in asteroids)
@@ -63,6 +69,7 @@ public class Asteroid : MonoBehaviourPun
 	{
 		transform.Translate(transform.up * asteroidMoveSpeed * Time.deltaTime, Space.World);
 	}
+
 
 	public void TakeDamage()
 	{

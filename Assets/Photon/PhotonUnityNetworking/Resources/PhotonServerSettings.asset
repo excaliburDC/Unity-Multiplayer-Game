@@ -41,6 +41,9 @@ MonoBehaviour:
   - SpawnAsteroids
   - AsteroidMovement
   - InitAsteroids
+  - SelectActiveAsteroid
+  - TakeDamage
+  - InitAst
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
