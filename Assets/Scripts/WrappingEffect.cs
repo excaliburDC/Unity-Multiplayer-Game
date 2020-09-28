@@ -1,8 +1,9 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WrappingEffect : MonoBehaviour
+public class WrappingEffect : MonoBehaviour,IPunObservable
 {
 
 
@@ -72,5 +73,13 @@ public class WrappingEffect : MonoBehaviour
 		{
 			transform.position = mainCam.ViewportToWorldPoint(viewportPos);
 		}
+	}
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+		if (stream.IsWriting)
+			stream.SendNext(transform.position);
+		else
+			transform.position = (Vector3)stream.ReceiveNext();
 	}
 }

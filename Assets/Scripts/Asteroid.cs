@@ -22,11 +22,11 @@ public class Asteroid : MonoBehaviourPun
 
 	private void Start()
 	{
-		if (photonView.IsMine)
-		{
+		//if (photonView.IsMine)
+		//{
 			//photonView.RPC("SelectActiveAsteroid", RpcTarget.All);
 			SelectActiveAsteroid();
-		}
+		//}
 		//SelectActiveAsteroid();
 	}
 
@@ -34,8 +34,8 @@ public class Asteroid : MonoBehaviourPun
 	{
 		if (photonView.IsMine)
 		{
-			//photonView.RPC("AsteroidMovement", RpcTarget.All);
-			AsteroidMovement();
+			photonView.RPC("AsteroidMovement", RpcTarget.All);
+			//AsteroidMovement();
 		}
 			
 
@@ -64,7 +64,7 @@ public class Asteroid : MonoBehaviourPun
 
 	}
 
-	//[PunRPC]
+	[PunRPC]
 	public void AsteroidMovement()
 	{
 		transform.Translate(transform.up * asteroidMoveSpeed * Time.deltaTime, Space.World);

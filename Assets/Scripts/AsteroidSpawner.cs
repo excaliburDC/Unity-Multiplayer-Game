@@ -4,7 +4,7 @@ using UnityEngine;
 using Photon.Pun;
 
 
-public class AsteroidSpawner : MonoBehaviourPun
+public class AsteroidSpawner : MonoBehaviour
 {
 	
 	[SerializeField] private GameObject asteroidPrefab;
@@ -30,11 +30,12 @@ public class AsteroidSpawner : MonoBehaviourPun
 	// Start is called before the first frame update
 	void Start()
     {
-	
 		SpawnAsteroids();
 		//photonView.RPC("SpawnAsteroids", RpcTarget.All);
 	}
 
+
+	//[PunRPC]
 	public void SpawnAsteroids()
 	{
 		int numAsteroids = startAsteroidCount;
@@ -44,9 +45,14 @@ public class AsteroidSpawner : MonoBehaviourPun
 			Vector3 offScreenPos = GetOffScreenPosition();
 			Quaternion offScreenRot = GetOffScreenRotation();
 
+			//if(photonView.IsMine)
+   //         {
+			//	photonView.RPC("InitAsteroids", RpcTarget.All,asteroidPrefab,offScreenPos,offScreenRot);
+
+			//}
 			InitAsteroids(asteroidPrefab, offScreenPos, offScreenRot);
 
-			//photonView.RPC("InitAsteroids", RpcTarget.All,asteroidPrefab,offScreenPos,offScreenRot);
+			
 		}
 
 	}
@@ -122,6 +128,7 @@ public class AsteroidSpawner : MonoBehaviourPun
 	}
 
 
+	//[PunRPC]
 	private void InitAsteroids(GameObject prefab,Vector3 position,Quaternion rotation)
 	{
 
